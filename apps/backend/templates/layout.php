@@ -27,7 +27,7 @@
                 $("#"+id).submit();
             }
             
-            var socketIoAddress = "<?php echo sfConfig::get("app_ebot_ip"); ?>:<?php echo sfConfig::get("app_ebot_port"); ?>";
+            var socketIoAddress = "<?php echo sfConfig::get("app_ebot_proto", "http://"); ?><?php echo sfConfig::get("app_ebot_ip"); ?>:<?php echo sfConfig::get("app_ebot_port"); ?>";
             var socket = null;
             var socketIoLoaded = false;
             var loadingSocketIo = false;
@@ -46,8 +46,8 @@
                 }
                 
                 loadingSocketIo = true;
-                $.getScript("http://"+socketIoAddress+"/socket.io/socket.io.js", function(){
-                    socket = io.connect("http://"+socketIoAddress);
+                $.getScript(socketIoAddress+"/socket.io/socket.io.js", function(){
+                    socket = io.connect(socketIoAddress);
                     socket.on('connect', function(){ 
                         socketIoLoaded = true;
                         loadingSocketIo = false;
